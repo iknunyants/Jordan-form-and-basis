@@ -1,8 +1,6 @@
 from sympy import *
 import math
 
-init_printing()
-
 
 def divisor_generator(n):
     n = abs(n)
@@ -167,9 +165,7 @@ def rational_roots(pol):
 
 
 x = Symbol('x')
-# a_mat = Matrix([[1, 0, 1], [0, 1, -1], [-1, -1, 1]])
-# a_pol = Matrix([[3, 1, 2], [6, 4, -1], [-1, -1, 1]])
-# a_pol = Matrix([[0, 1, -1, 1], [-1, 2, -1, 1], [-1, 1, 1, 0], [-1, 1, 0, 1]])
+print('Вводится порядок матрицы и элементы матрицы. Каждое число на новой строчке')
 mat_size = int(input())
 a_mat = Matrix([[int(input()) for i in range(mat_size)] for j in range(mat_size)])
 mat_size = a_mat.shape[0]
@@ -182,7 +178,7 @@ count = 0
 for root in all_roots:
     count += all_roots[root]
 if count != degree(a_canon[mat_size - 1, mat_size - 1], x):
-    print('NO')
+    print('Матрица не приводима к жордановой форме над полем Q')
     exit()
 j_mat = eye(mat_size)
 place = 0
@@ -227,17 +223,5 @@ for k in range(max_degree + 1):
                 coeffs_list = Poly(q_major[i, j]).all_coeffs()
                 cur_mat[i, j] = coeffs_list[deg - k]
     t_mat += cur_mat * j_mat ** k
-print(j_mat)
-print(t_mat)
-print(det(t_mat))
-print(a_mat * t_mat - t_mat * j_mat)
-# x = Symbol('x')
-# mat_size = int(input())
-# B = eye(mat_size)
-# a_pol = B * x - a_pol
-# Q_first = eye(mat_size)
-# A_canon, Q_first = canonical_form(a_pol)
-
-# b = a_canon[2,2]
-# b = expand(b)
-# c, p = b.as_content_primitive()
+print('Матрица перехода к жорданову базису', t_mat, sep='\n')
+print('Нормальая жорданова форма', j_mat, sep='\n')
